@@ -29,10 +29,11 @@ const MatchingContacts = (
             key: item.id,
             item: item,
             // TODO something is wrong here
+            // MY SOLUTION
             className: classNames(
               "MatchingContacts_item",
               {
-                "MatchingContacts_item_highlighted": false,
+                "MatchingContacts_item_highlighted": highlightedIndex === index,
               }),
           })}
         >
