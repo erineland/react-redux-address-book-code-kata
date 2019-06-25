@@ -31,50 +31,62 @@ export const updateSearchPhrase = newPhrase =>
 export const selectMatchingContact = selectedMatchingContact =>
   (dispatch, getState, { httpApi, dataCache }) => {
     debugger;
+
     // FIXED? - TODO something is missing here
-    const getContactDetails = ({ id }) => {
-      debugger;
-      console.log(`getContactDetails call id is: ${id}`);
-      return httpApi
-        .getContact({ contactId: id })
-        .then(({ data }) => {
+    // check the cache here!!
+    const cachedContactDetails = dataCache.load({ key: selectedMatchingContact.id });
+    if (cachedContactDetails) {
+      dispatch(
+        contactDetailsActions.fetchContactDetailsSuccess({
+          cachedContactDetails
+        }),
+      );
+    } else {
+      const getContactDetails = ({ id }) => {
+        debugger;
+        console.log(`getContactDetails call id is: ${id}`);
+        return httpApi
+          .getContact({ contactId: id })
+          .then(({ data }) => {
+            debugger;
+            return {
+              id: data.id,
+              name: data.name,
+              phone: data.phone,
+              addressLines: data.addressLines,
+            }
+          });
+      };
+
+      dispatch(
+        searchActions.selectMatchingContact({ selectedMatchingContact }),
+      );
+
+      dispatch(
+        contactDetailsActions.fetchContactDetailsStart(),
+      );
+
+      getContactDetails({ id: selectedMatchingContact.id })
+        .then((contactDetails) => {
+          // TODO something is missing here
+          // Not caching the contact detail as value!!!!
           debugger;
-          return {
-            id: data.id,
-            name: data.name,
-            phone: data.phone,
-            addressLines: data.addressLines,
-          }
+          dataCache.store({
+            key: contactDetails.id,
+            value: contactDetails
+          });
+
+          // FIXED - TODO something is wrong here
+          dispatch(
+            contactDetailsActions.fetchContactDetailsSuccess({
+              contactDetails
+            }),
+          );
+        })
+        .catch(() => {
+          dispatch(
+            contactDetailsActions.fetchContactDetailsFailure(),
+          );
         });
-    };
-
-    dispatch(
-      searchActions.selectMatchingContact({ selectedMatchingContact }),
-    );
-
-    dispatch(
-      contactDetailsActions.fetchContactDetailsStart(),
-    );
-
-    getContactDetails({ id: selectedMatchingContact.id })
-      .then((contactDetails) => {
-        // TODO something is missing here
-        debugger;
-        dataCache.store({
-          key: contactDetails.id,
-        });
-
-        // TODO something is wrong here
-        debugger;
-        dispatch(
-          contactDetailsActions.fetchContactDetailsSuccess({
-            contactDetails
-          }),
-        );
-      })
-      .catch(() => {
-        dispatch(
-          contactDetailsActions.fetchContactDetailsFailure(),
-        );
-      });
+    }
   };
