@@ -4,47 +4,48 @@ import { SEARCH_REQUEST_MIN_INTERVAL_IN_MILLIS } from "../httpApi/fakeHttpApi";
 
 export const updateSearchPhrase = newPhrase =>
   (dispatch, getState, { httpApi }) => {
-    debugger;
+    // debugger;
     dispatch(
       searchActions.updateSearchPhraseStart({ newPhrase }),
     );
     httpApi.getFirst5MatchingContacts({ namePart: newPhrase })
-    .then(({ data }) => {
-      debugger;
-      const matchingContacts = data.map(contact => ({
-        id: contact.id,
-        value: contact.name,
-      }));
-      // FIXED - TODO something is wrong here
-      dispatch(
-        searchActions.updateSearchPhraseSuccess({ matchingContacts: matchingContacts}),
-      );
-    })
-    .catch((error) => {
-      // TODO something is missing here
-      debugger;
-      console.log(`THIS IS THE ERROR: ${JSON.stringify(error)}`);
-      //dispatch an action here!!!
-      dispatch(
-        searchActions.updateSearchPhraseFailure(),
-      );
-    });
+      .then(({ data }) => {
+        // debugger;
+        const matchingContacts = data.map(contact => ({
+          id: contact.id,
+          value: contact.name,
+        }));
+        // FIXED? - TODO something is wrong here
+        dispatch(
+          searchActions.updateSearchPhraseSuccess({ matchingContacts: matchingContacts }),
+        );
+      })
+      .catch((error) => {
+        // FIXED? - TODO something is missing here
+        dispatch(
+          searchActions.updateSearchPhraseFailure(),
+        );
+      });
   };
 
 export const selectMatchingContact = selectedMatchingContact =>
   (dispatch, getState, { httpApi, dataCache }) => {
     debugger;
-    // TODO something is missing here
+    // FIXED? - TODO something is missing here
     const getContactDetails = ({ id }) => {
       debugger;
+      console.log(`getContactDetails call id is: ${id}`);
       return httpApi
-          .getContact({ contactId: selectedMatchingContact.id })
-          .then(({ data }) => ({
+        .getContact({ contactId: id })
+        .then(({ data }) => {
+          debugger;
+          return {
             id: data.id,
             name: data.name,
             phone: data.phone,
             addressLines: data.addressLines,
-          }));
+          }
+        });
     };
 
     dispatch(
@@ -58,12 +59,17 @@ export const selectMatchingContact = selectedMatchingContact =>
     getContactDetails({ id: selectedMatchingContact.id })
       .then((contactDetails) => {
         // TODO something is missing here
+        debugger;
         dataCache.store({
           key: contactDetails.id,
         });
+
         // TODO something is wrong here
+        debugger;
         dispatch(
-          contactDetailsActions.fetchContactDetailsFailure(),
+          contactDetailsActions.fetchContactDetailsSuccess({
+            contactDetails
+          }),
         );
       })
       .catch(() => {
