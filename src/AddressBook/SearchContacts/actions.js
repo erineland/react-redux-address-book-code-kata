@@ -21,9 +21,11 @@ export const updateSearchPhraseFailure = () => ({
 
 export const SELECT_MATCHING_CONTACT = "SELECT_MATCHING_CONTACT";
 
-export const selectMatchingContact = ({ selectedMatchingContact }) => ({
-  type: SELECT_MATCHING_CONTACT,
-  payload: {
-    selectedMatchingContact,
-  },
-});
+export const selectMatchingContact = ({ selectedMatchingContact }) => {
+  return {
+    type: SELECT_MATCHING_CONTACT,
+    payload: {
+      selectedMatchingContact,
+    },
+  }
+}

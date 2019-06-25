@@ -38,7 +38,6 @@ const reducer = (state = initialState, action) => {
 
     // FIXED - TODO something is wrong here, used id not name
     case SELECT_MATCHING_CONTACT:
-      debugger;
       return {
         ...state,
         phrase: payload.selectedMatchingContact.value,

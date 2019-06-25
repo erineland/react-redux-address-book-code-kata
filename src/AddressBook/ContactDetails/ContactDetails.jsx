@@ -41,7 +41,7 @@ const ContactDetails = ({ data, hasFailedToFetch }) => {
         <span>{phone}</span>
       </div>
 
-      {/* TODO something is wrong here */}
+      {/* NOT FIXED - TODO something is wrong here */}
       <div className="ContactDetails_data_item ContactDetails_address">
         <span>Address</span>
         <span>{addressLines[0]}</span>

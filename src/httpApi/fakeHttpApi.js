@@ -28,12 +28,13 @@ class IntervalCheck {
 
   constructor () {
     this.passedLessThan = this.passedLessThan.bind(this);
+    this.previousNow = new Date();
   }
 
   passedLessThan (minInterval) {
     const now = new Date();
     const interval = differenceInMilliseconds(now, this.previousNow);
-    this.previousNow = now;
+    // this.previousNow = now;
     return interval < minInterval;
   };
 

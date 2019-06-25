@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
 
   switch (type) {
 
-    // TODO something is missing here
+    // FIXED? - TODO something is missing here
     case FETCH_CONTACT_DETAILS__START:
       return {
         ...state,
@@ -22,7 +22,7 @@ const reducer = (state = initialState, action) => {
         fetchFailure: false,
       };
 
-    // TODO something is wrong here
+    // FIXED? - TODO something is wrong here
     case FETCH_CONTACT_DETAILS__SUCCESS:
       return {
         ...state,

@@ -4,13 +4,11 @@ import { SEARCH_REQUEST_MIN_INTERVAL_IN_MILLIS } from "../httpApi/fakeHttpApi";
 
 export const updateSearchPhrase = newPhrase =>
   (dispatch, getState, { httpApi }) => {
-    // debugger;
     dispatch(
       searchActions.updateSearchPhraseStart({ newPhrase }),
     );
     httpApi.getFirst5MatchingContacts({ namePart: newPhrase })
       .then(({ data }) => {
-        // debugger;
         const matchingContacts = data.map(contact => ({
           id: contact.id,
           value: contact.name,
@@ -30,25 +28,24 @@ export const updateSearchPhrase = newPhrase =>
 
 export const selectMatchingContact = selectedMatchingContact =>
   (dispatch, getState, { httpApi, dataCache }) => {
-    debugger;
 
     // FIXED? - TODO something is missing here
     // check the cache here!!
     const cachedContactDetails = dataCache.load({ key: selectedMatchingContact.id });
     if (cachedContactDetails) {
+      console.log(`\n\n\n details were in cache! not calling for: ${JSON.stringify(cachedContactDetails)}`);
       dispatch(
         contactDetailsActions.fetchContactDetailsSuccess({
           cachedContactDetails
         }),
       );
     } else {
+      console.log(`\n\n\n details WERE NOT in cache! calling API for: ${JSON.stringify(selectedMatchingContact)}`);
       const getContactDetails = ({ id }) => {
-        debugger;
         console.log(`getContactDetails call id is: ${id}`);
         return httpApi
           .getContact({ contactId: id })
           .then(({ data }) => {
-            debugger;
             return {
               id: data.id,
               name: data.name,
@@ -68,9 +65,8 @@ export const selectMatchingContact = selectedMatchingContact =>
 
       getContactDetails({ id: selectedMatchingContact.id })
         .then((contactDetails) => {
-          // TODO something is missing here
+          // FIXED - TODO something is missing here
           // Not caching the contact detail as value!!!!
-          debugger;
           dataCache.store({
             key: contactDetails.id,
             value: contactDetails

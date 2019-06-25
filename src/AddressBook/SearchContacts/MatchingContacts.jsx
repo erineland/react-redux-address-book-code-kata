@@ -12,8 +12,7 @@ const MatchingContacts = (
     downshiftGetItemProps,
   },
 ) => {
-  // TODO something is missing here
-  // MY SOLUTION
+  // FIXED - TODO something is missing here
   if (data.length === 0) {
     return null;
   }
@@ -28,8 +27,7 @@ const MatchingContacts = (
           {...downshiftGetItemProps({
             key: item.id,
             item: item,
-            // TODO something is wrong here
-            // MY SOLUTION
+            // FIXED - TODO something is wrong here
             className: classNames(
               "MatchingContacts_item",
               {

@@ -20,7 +20,7 @@ export const setupStore = ({ httpApi }) => {
 
   middlewares.push(
     reduxThunk.withExtraArgument({
-      // TODO something is missing here
+      // NOT FIXED - TODO something is missing here
       httpApi: httpApi,
       dataCache: new DataCache(),
     }),
