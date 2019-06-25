@@ -36,11 +36,12 @@ const reducer = (state = initialState, action) => {
         searchFailure: true,
       };
 
-    // TODO something is wrong here
+    // FIXED - TODO something is wrong here, used id not name
     case SELECT_MATCHING_CONTACT:
+      debugger;
       return {
         ...state,
-        phrase: payload.selectedMatchingContact.id,
+        phrase: payload.selectedMatchingContact.value,
         matchingContacts: [],
       };
 
