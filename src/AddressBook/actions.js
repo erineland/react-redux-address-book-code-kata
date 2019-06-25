@@ -22,15 +22,21 @@ export const updateSearchPhrase = newPhrase =>
     })
     .catch((error) => {
       // TODO something is missing here
-
+      debugger;
+      console.log(`THIS IS THE ERROR: ${JSON.stringify(error)}`);
+      //dispatch an action here!!!
+      dispatch(
+        searchActions.updateSearchPhraseFailure(),
+      );
     });
   };
 
 export const selectMatchingContact = selectedMatchingContact =>
   (dispatch, getState, { httpApi, dataCache }) => {
-
+    debugger;
     // TODO something is missing here
     const getContactDetails = ({ id }) => {
+      debugger;
       return httpApi
           .getContact({ contactId: selectedMatchingContact.id })
           .then(({ data }) => ({
