@@ -13,6 +13,10 @@ const MatchingContacts = (
   },
 ) => {
   // TODO something is missing here
+  // MY SOLUTION
+  if (data.length === 0) {
+    return null;
+  }
 
   return (
     <ul
