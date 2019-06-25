@@ -3,6 +3,8 @@ import { actions as contactDetailsActions } from "./ContactDetails";
 
 export const updateSearchPhrase = newPhrase =>
   (dispatch, getState, { httpApi }) => {
+    debugger;
+    //this takes an action
     dispatch(
       searchActions.updateSearchPhraseStart({ newPhrase }),
     );

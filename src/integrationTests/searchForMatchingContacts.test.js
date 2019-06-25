@@ -9,6 +9,7 @@ import {
   mockHttpApi,
   renderApp,
 } from "../testUtils";
+// import PhraseInput
 
 describe("search for matching Contacts", () => {
 
@@ -23,7 +24,7 @@ describe("search for matching Contacts", () => {
       tree = renderApp({ httpApi });
     });
 
-    it("render text typed into search phrase input", async () => {
+    it.only("render text typed into search phrase input", async () => {
       tree.searchPhraseInput().changeValueTo("a");
 
       expect(tree.searchPhraseInput()).toHaveValue("a");

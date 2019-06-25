@@ -80,7 +80,10 @@ const mapReduxStateToProps = state => ({
 
 const mapReduxDispatchToProps = dispatch => ({
   onPhraseChange:
-    (newPhrase) => dispatch(updateSearchPhrase(newPhrase)),
+    (newPhrase) => {
+      debugger;
+      dispatch(updateSearchPhrase(newPhrase))
+    },
   // TODO something is wrong here
   onMatchingContactSelect:
     (selectedMatchingContact) => dispatch(updateSearchPhrase(selectedMatchingContact.value)),
